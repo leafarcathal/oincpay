@@ -14,6 +14,8 @@ services:
     working_dir: /var/www/
     volumes:
       - ./:/var/www
+    networks:
+      - mynetwork
     
  #Nginx Service
   nginx:
@@ -24,6 +26,8 @@ services:
     volumes:
       - ./:/var/www
       - ./nginx/conf.d:/etc/nginx/conf.d/
+    networks:
+      - mynetwork
   #Mysl Service
   db:
     image: mysql:8
@@ -33,8 +37,9 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_USER: ${DB_USERNAME}
+    networks:
+      - mynetwork
       
 networks:
-  landing:
+  mynetwork:
     driver: bridge
-
