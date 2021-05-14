@@ -30,6 +30,5 @@ class AccessCodeService
 				'access_code'	=> $accessCode->access_code,
 			];
 		}
-
 	}
 }

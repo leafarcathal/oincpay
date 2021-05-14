@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-    	$user = User::create([
+    	$user = User::updateOrCreate([
             'user_group_id' => UserGroups::first()->id,
             'name' => 'User 01',
             'email' => 'user01@yopmail.com',
@@ -23,7 +23,7 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('123@abcd'),
         ]);
 
-        $user = User::create([
+        $user = User::updateOrCreate([
             'user_group_id' => UserGroups::first()->id,
             'name' => 'User 02',
             'email' => 'user02@yopmail.com',
@@ -31,7 +31,7 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('123@abcd'),
         ]);
 
-        $user = User::create([
+        $user = User::updateOrCreate([
             'user_group_id' => UserGroups::first()->id,
             'name' => 'User 03',
             'email' => 'user03@yopmail.com',
@@ -39,7 +39,7 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('123@abcd'),
         ]);
 
-        $user = User::create([
+        $user = User::updateOrCreate([
             'user_group_id' => UserGroups::all()[1]->id,
             'name' => 'Store 01',
             'email' => 'store01@yopmail.com',
@@ -47,7 +47,7 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('123@abcd'),
         ]);
 
-        $user = User::create([
+        $user = User::updateOrCreate([
             'user_group_id' => UserGroups::all()[1]->id,
             'name' => 'Store 02',
             'email' => 'store02@yopmail.com',

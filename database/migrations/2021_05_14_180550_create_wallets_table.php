@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAccessCodesTable extends Migration
+class CreateWalletsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateAccessCodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('access_codes', function (Blueprint $table) {
+        Schema::create('wallets', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('access_code');
-            $table->dateTimeTz('valid_through');
+            $table->decimal('amount', $precision = 14, $scale = 2);
+            $table->mediumText('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
-
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
@@ -32,6 +31,6 @@ class CreateAccessCodesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('access_codes');
+        Schema::dropIfExists('wallets');
     }
 }
