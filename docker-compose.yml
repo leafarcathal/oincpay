@@ -1,7 +1,7 @@
 version: "3.7"
 services:
 
-#OincPay
+#LaravelApp
   app:
     build:
       args:
@@ -37,6 +37,8 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_USER: ${DB_USERNAME}
+    ports:
+    - "3307:3306"
     networks:
       - mynetwork
       

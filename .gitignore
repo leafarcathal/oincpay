@@ -1,0 +1,2 @@
+# Gitignore -- These files are not sent to git
+.env
