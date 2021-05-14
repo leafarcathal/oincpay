@@ -10,5 +10,4 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class UserGroups extends Model
 {
     use HasFactory, SoftDeletes;
-
 }
