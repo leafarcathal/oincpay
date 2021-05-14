@@ -36,13 +36,13 @@ class ResponseController extends Controller
      * @return \Illuminate\Http\Response
      */ 
 
-    protected function sendError($error, $code = 404)
+    protected function sendError($error, $http_code = 404)
     {
     	$response = [
             'success' => false,
             'message' => $error,
         ];
-        return response()->json($response, $code);
+        return response()->json($response, $http_code);
     }
 
 }

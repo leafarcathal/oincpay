@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
+use \Exception;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Controllers\API\ResponseController as ResponseController;
 use Illuminate\Support\Facades\Auth;
-use \Exception;
+use App\Http\Controllers\API\ResponseController as ResponseController;
+use App\Constants\UserStatusConstant;
 
 class AuthController extends ResponseController
 {
@@ -30,14 +31,27 @@ class AuthController extends ResponseController
     		}
 
     		$userdata = $this->formatBasicAuth($request->header('Authorization'));
-    		
+
     		if(!$userdata){
-    			throw new Exception('Invalid basic authorization');
+    			throw new Exception('Invalid basic authorization. Check your "Authorization" credentials on HTTP request.');
     		}
 
     	} catch (Exception $e) {
 		  	return $this->sendError($e->getMessage(), 404);
     	}
+
+    	try {
+
+    		$userdata['status'] = UserStatusConstant::ACTIVE;
+
+    		if (!Auth::attempt($userdata)) {
+	        	throw new Exception("Invalid username and password")
+	        }
+
+    	} catch (Exception $e){
+		  	return $this->sendError($e->getMessage(), 400);
+    	}
+
     	return $this->sendResponse('a','Yey');
     }
 
