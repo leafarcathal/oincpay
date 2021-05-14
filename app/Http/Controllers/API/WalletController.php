@@ -35,14 +35,14 @@ class WalletController extends ResponseController
     		$accessCode = $accessCodeService->check($access_code);
 
     		if(!$accessCode){
-    			throw new Exception('Invalid or expired access code. Access codes are only available for ten minutes after they\'re generated');
+    			throw new Exception('Invalid or expired access code. Access codes are only available for ten minutes after they\'re generated.');
     		}
 
 			$walletService = new WalletService();
 			$wallet = $walletService->getByUser($accessCode->user_id);
 
-    	   return $this->sendResponse($wallet, 'Wallet successfully retrieved');
-    	   
+    	   return $this->sendResponse($wallet, 'Wallet successfully retrieved!');
+
     	} catch (Exception $e) {
 		  	return $this->sendError($e->getMessage(), 400);
     	}

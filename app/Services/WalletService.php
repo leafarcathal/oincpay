@@ -21,31 +21,11 @@ class WalletService
 		}
 
 		$wallet = [
-			'description'		=> $wallet->description,
-			'amount'			=> $wallet->amount
+			'wallet' => [
+				'description'		=> $wallet->description,
+				'amount'			=> $wallet->amount
+			]
 		];
 		return $wallet;
-	}
-
-	/**
-	 * Check if access code is valid;
-	 * @param String access_code;
-	 * @return mixed AccessCode $accessCode or boolean false if fails;
-	 */ 
-
-	public function check($access_code)
-	{
-		$accessCode = AccessCode::where('access_code', $access_code)->first();
-		
-		if(is_null($accessCode)){
-			return false;
-		}
-
-		$now = Carbon::now();
-
-		if($now->gt($accessCode->valid_through)){
-			return false;
-		} 
-		return $accessCode;
 	}
 }
