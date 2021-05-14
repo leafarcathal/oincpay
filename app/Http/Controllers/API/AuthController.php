@@ -45,7 +45,7 @@ class AuthController extends ResponseController
     		$userdata['status'] = UserStatusConstant::ACTIVE;
 
     		if (!Auth::attempt($userdata)) {
-	        	throw new Exception("Invalid username and password")
+	        	throw new Exception("Invalid username and password");
 	        }
 
     	} catch (Exception $e){
