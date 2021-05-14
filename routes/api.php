@@ -17,7 +17,7 @@ use App\Http\Controllers\API\WalletController;
 */
 
 Route::get('/authenticate', [AuthController::class, 'authenticate']);
-Route::get('/wallet', [WallerController::class, 'get']);
+Route::get('/wallet/{access_code?}', [WalletController::class, 'get']);
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
