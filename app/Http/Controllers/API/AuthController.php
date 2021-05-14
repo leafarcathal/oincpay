@@ -37,7 +37,7 @@ class AuthController extends ResponseController
     		}
 
     	} catch (Exception $e) {
-		  	return $this->sendError($e->getMessage(), 404);
+		  	return $this->sendError($e->getMessage(), 400);
     	}
 
     	try {
