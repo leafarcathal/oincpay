@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\API\ResponseController as ResponseController;
 use App\Constants\UserStatusConstant;
+use App\Services\AccessCodeService;
 
 class AuthController extends ResponseController
 {
@@ -19,7 +20,7 @@ class AuthController extends ResponseController
 	 * @param Request 	$request  Data received through API call.
 	 * 
 	 * @throws Exception If e-mail or password are not valid.
-	 * @return AccessToken $accessToken
+	 * @return AccessCode $accessCode
 	 */ 
 
     public function authenticate(Request $request)
@@ -52,7 +53,21 @@ class AuthController extends ResponseController
 		  	return $this->sendError($e->getMessage(), 400);
     	}
 
-    	return $this->sendResponse('a','Yey');
+        try {
+
+            $accessCode = new AccessCodeService();
+            $accessCode = $accessCode->generate();
+
+            if(!$accessCode){
+                throw new Exception('Could not retrieve your access code. Please, try again later.');
+            }
+
+    	   return $this->sendResponse($accessCode, 'Access code successfully generated');
+
+        } catch (Exception $e){
+            return $this->sendError($e->getMessage(), 400);
+        }
+
     }
 
     /**
