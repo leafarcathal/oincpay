@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\API\ResponseController as ResponseController;
 use App\Constants\UserStatusConstant;
+use App\Constants\ApiKeyStatusConstant;
 use App\Services\AccessCodeService;
+use App\Models\ApiKey;
 
 class AuthController extends ResponseController
 {
@@ -27,39 +29,34 @@ class AuthController extends ResponseController
     {
     	try{
 
-    		if(is_null($request->header('Authorization'))){
-    			throw new Exception('Basic authorization is required for this endpoint.');
+    		if(is_null($request->header('hash'))){
+    			throw new Exception('API Key authorization is required for this endpoint. Format: key: hash, value: your API hash');
     		}
 
-    		$userdata = $this->formatBasicAuth($request->header('Authorization'));
+            $apiKey = ApiKey::where([
+                'hash'      => $request->header('hash'),
+                'status'    => ApiKeyStatusConstant::ACTIVE,
+            ])->first();
+              
+            if(is_null($apiKey)){
+                throw new Exception('Invalid API key value. Check your credentials and try again');
+            }
 
-    		if(!$userdata){
-    			throw new Exception('Invalid basic authorization. Check your "Authorization" credentials on HTTP request.');
-    		}
+            if($apiKey->owner->status == UserStatusConstant::INACTIVE){
+                throw new Exception('You\'re not allowed to make API calls - Please contact OincPay support');
+            }
 
     	} catch (Exception $e) {
-		  	return $this->sendError($e->getMessage(), 401);
-    	}
-
-    	try {
-
-    		$userdata['status'] = UserStatusConstant::ACTIVE;
-
-    		if (!Auth::attempt($userdata)) {
-	        	throw new Exception("Invalid username and password");
-	        }
-
-    	} catch (Exception $e){
 		  	return $this->sendError($e->getMessage(), 401);
     	}
 
         try {
 
             $accessCode = new AccessCodeService();
-            $accessCode = $accessCode->generate();
+            $accessCode = $accessCode->generate($apiKey->owner->id);
 
             if(!$accessCode){
-                throw new Exception('Could not retrieve your access code. Please, try again later.');
+                throw new Exception('Could not retrieve your access code. Please, try again later or contact our OincPay support.');
             }
 
     	   return $this->sendResponse($accessCode, 'Access code successfully generated');
@@ -68,35 +65,5 @@ class AuthController extends ResponseController
             return $this->sendError($e->getMessage(), 500);
         }
 
-    }
-
-    /**
-	 * Formats received basic auth string into username / password values.
-	 *
-	 * @param String 	$basic_auth_header	String from API request. 
-	 * @return mixed 	Array of username and password with their values or boolean false on failure.
-	 */ 
-
-    private function formatBasicAuth($basic_auth_header)
-    {
-    	$userdata = explode('Basic ', $basic_auth_header);
-
-    	if(!isset($userdata[1])){
-    		return false;
-    	}
-    	
-    	$userdata = base64_decode($userdata[1]);
-
-    	if(!$userdata){
-    		return false;
-    	}
-
-    	$userdata = explode(':', $userdata, 2);
-    	$formattedArray = [
-    		'email'		=> $userdata[0],
-    		'password'	=> $userdata[1]
-    	];
-
-    	return $formattedArray;
     }
 }

@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
            UserGroupsTableSeeder::class,
            UsersTableSeeder::class,
-           WalletTableSeeder::class
+           WalletTableSeeder::class,
+           ApiKeysTableSeeder::class
         ]);
     }
 }

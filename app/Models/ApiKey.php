@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
-class AccessCode extends Model
+class ApiKey extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -17,9 +18,9 @@ class AccessCode extends Model
      * @var array
      */
     protected $fillable = [
+        'status',
         'user_id',
-        'valid_through',
-        'access_code'
+        'hash',
     ];
 
     /**

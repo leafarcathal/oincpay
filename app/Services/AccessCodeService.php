@@ -13,13 +13,14 @@ class AccessCodeService
 
 	/**
 	 * Creates a new access_code for the logged user;
+	 * @param user_id 
 	 * @return mixed array() or bollean false if fails;
 	 */ 
 
-	public function generate()
+	public function generate($user_id)
 	{
 		$accessCode = AccessCode::create([
-			'user_id' 		=> Auth::user()->id, 
+			'user_id' 		=> $user_id,
 			'valid_through' => Carbon::now()->add(10, 'hours'),
 			'access_code'	=> Str::random(60),
 		]);
