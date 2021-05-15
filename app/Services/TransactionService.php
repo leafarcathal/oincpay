@@ -48,25 +48,17 @@ class TransactionService
 
 	public function create(AccessCode $accessCode, Wallet $senderWallet, Wallet $receiverWallet, $amount)
 	{
-		  echo "<pre>";
-		  var_dump(TransactionStatusConstant::NOT_PAID);
-		  echo "</pre>";
-		  die();
+		
 		$transaction = Transaction::create([
             'user_id_sender' 		=> $senderWallet->user_id,
             'user_id_receiver' 		=> $receiverWallet->user_id,
             'wallet_id_sender' 		=> $senderWallet->id,
-            'receiver_id_wallet' 	=> $receiverWallet->id,
+            'wallet_id_receiver' 	=> $receiverWallet->id,
             'status' 				=> TransactionStatusConstant::NOT_PAID,
             'uuid'	 				=> Str::random(20),
             'access_code'			=> $accessCode->access_code,
             'amount'				=> floatval($amount),
         ]);
-
-          echo "<pre>";
-          var_dump($transaction);
-          echo "</pre>";
-          die();
 
         if(!$transaction){
         	return false;

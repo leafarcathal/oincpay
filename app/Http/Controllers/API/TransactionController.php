@@ -98,8 +98,12 @@ class TransactionController extends ResponseController
             $receiverWallet = Wallet::where('user_id', $receiverUser->id)->first();
 
             $transaction = $transactionService->create($accessCode, $senderWallet, $receiverWallet, $request->amount);
-
+            
+            if(!$transaction){
+                throw new Exception('Unable to create transaction. Please try again later');
+            }
         } catch (Exception $e){
+            return $this->sendError($e->getMessage(), 500);
 
         }
 

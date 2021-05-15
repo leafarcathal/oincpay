@@ -21,7 +21,7 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('user_id_receiver');
             $table->unsignedBigInteger('wallet_id_sender');
             $table->unsignedBigInteger('wallet_id_receiver');
-            $table->enum('status', $transactionStatus->toArray())->default($transactionStatus->first());
+            $table->enum('status', $transactionStatus->toArray())->default($transactionStatus->last());
             $table->string('uuid');
             $table->string('access_code');
             $table->decimal('amount', $precision = 14, $scale = 2);
