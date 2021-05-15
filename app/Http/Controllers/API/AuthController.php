@@ -20,7 +20,7 @@ class AuthController extends ResponseController
 	 * @param Request 	$request  Data received through API call.
 	 * 
 	 * @throws Exception If e-mail or password are not valid.
-	 * @return AccessCode $accessCode
+	 * @return HTTP response
 	 */ 
 
     public function authenticate(Request $request)
@@ -38,7 +38,7 @@ class AuthController extends ResponseController
     		}
 
     	} catch (Exception $e) {
-		  	return $this->sendError($e->getMessage(), 400);
+		  	return $this->sendError($e->getMessage(), 401);
     	}
 
     	try {
@@ -50,7 +50,7 @@ class AuthController extends ResponseController
 	        }
 
     	} catch (Exception $e){
-		  	return $this->sendError($e->getMessage(), 400);
+		  	return $this->sendError($e->getMessage(), 401);
     	}
 
         try {
@@ -65,7 +65,7 @@ class AuthController extends ResponseController
     	   return $this->sendResponse($accessCode, 'Access code successfully generated');
 
         } catch (Exception $e){
-            return $this->sendError($e->getMessage(), 400);
+            return $this->sendError($e->getMessage(), 500);
         }
 
     }

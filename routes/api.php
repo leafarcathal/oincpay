@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\WalletController;
+use App\Http\Controllers\API\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,7 @@ use App\Http\Controllers\API\WalletController;
 
 Route::get('/authenticate', [AuthController::class, 'authenticate']);
 Route::get('/wallet/{access_code?}', [WalletController::class, 'get']);
+Route::post('/transaction', [TransactionController::class, 'make']);
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

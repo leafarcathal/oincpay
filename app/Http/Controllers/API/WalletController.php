@@ -19,12 +19,11 @@ class WalletController extends ResponseController
 	 * @param access_code   $access_code String sent through API.
 	 * 
 	 * @throws Exception If access token ir not valid or expired. 
-	 * @return Wallet $wallet
+	 * @return HTTP response
 	 */ 
 
     public function get(Request $request, $access_code = false)
     {
-
     	try{
 
     		if(!$access_code){
