@@ -526,6 +526,7 @@ class ComposerStaticInitf9e4518de2b608692454e540629f7be2
         'App\\Jobs\\SendSmsJob' => __DIR__ . '/../..' . '/app/Jobs/SendSmsJob.php',
         'App\\Models\\AccessCode' => __DIR__ . '/../..' . '/app/Models/AccessCode.php',
         'App\\Models\\ApiKey' => __DIR__ . '/../..' . '/app/Models/ApiKey.php',
+        'App\\Models\\Permission' => __DIR__ . '/../..' . '/app/Models/Permission.php',
         'App\\Models\\Transaction' => __DIR__ . '/../..' . '/app/Models/Transaction.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\UserGroups' => __DIR__ . '/../..' . '/app/Models/UserGroups.php',

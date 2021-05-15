@@ -32,6 +32,7 @@ return array(
     'App\\Jobs\\SendSmsJob' => $baseDir . '/app/Jobs/SendSmsJob.php',
     'App\\Models\\AccessCode' => $baseDir . '/app/Models/AccessCode.php',
     'App\\Models\\ApiKey' => $baseDir . '/app/Models/ApiKey.php',
+    'App\\Models\\Permission' => $baseDir . '/app/Models/Permission.php',
     'App\\Models\\Transaction' => $baseDir . '/app/Models/Transaction.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Models\\UserGroups' => $baseDir . '/app/Models/UserGroups.php',

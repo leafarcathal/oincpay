@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
            UserGroupsTableSeeder::class,
            UsersTableSeeder::class,
            WalletTableSeeder::class,
-           ApiKeysTableSeeder::class
+           ApiKeysTableSeeder::class,
+           PermissionTableSeeder::class
         ]);
     }
 }

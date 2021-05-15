@@ -14,11 +14,11 @@ class UserGroupsTableSeeder extends Seeder
     public function run()
     {
         $userGroup = UserGroups::updateOrCreate([
-            'name'      => 'Royal'
+            'name'          => 'Royal'
         ]);
 
         $userGroup = UserGroups::updateOrCreate([
-            'name'      => 'Store'
+            'name'          => 'Store'
         ]);
     }
 }

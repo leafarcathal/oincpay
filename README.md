@@ -1,4 +1,4 @@
-<p align="center"><img src="https://i.pinimg.com/originals/49/dc/09/49dc09badffa6068b7e36b554821e1fd.jpg" width="200"></p>
+<p align="center"><img src="https://i.imgur.com/gsrWbwJ.jpg" width="200"></p>
 
 ## What is OincPay?
 

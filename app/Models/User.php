@@ -84,7 +84,7 @@ class User extends Authenticatable
      */
     public function accessCodes()
     {
-        return $this->hasMany(accessCodes::class);
+        return $this->hasMany(AccessCode::class);
     }
 
 
