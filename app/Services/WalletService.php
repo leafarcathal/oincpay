@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
@@ -14,26 +13,6 @@ use App\Constants\TransactionStatusConstant;
 
 class WalletService
 {
-
-	/**
-	 * Validates if all required fields were sent on request
-	 * @param Request $request
-	 * @return boolean;
-	 */ 
-
-	public function validateRequired($request)
-	{
-		$validator = Validator::make($request->all(), [
-			'access_code' 			=> 'required|string|min:1|max:80',
-		]);
-
-        if($validator->fails()){
-        	return false;
-        } else {
-        	return true;
-        }
-
-	}
 
 	/**
 	 * Get wallet information by user;

@@ -4,10 +4,11 @@ namespace App\Http\Controllers\API;
 use \Exception;
 use App\Http\Controllers\API\ResponseController as ResponseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\Wallet;
+use App\Models\AccessCode;
 
-use App\Services\AccessCodeService;
 use App\Services\WalletService;
 
 class WalletController extends ResponseController
@@ -25,38 +26,39 @@ class WalletController extends ResponseController
     public function get(Request $request)
     {
 
-        // Check if all required fields are in request
+        // Check required fields 
+        try{
+
+            $validator = Validator::make($request->all(), [
+                'access_code'           => 'required|string|min:1|max:80',
+            ]);
+
+            if($validator->fails()){
+                throw new Exception('Access code is required for this endpoint');
+            }
+        } catch (Exception $e){
+            return $this->sendError($e->getMessage(), 403);
+        }
+
+        // Loads WalletService
 
         $walletService = new WalletService();
 
-        $required = $walletService->validateRequired($request);
-
-        if(!$required){
-            return $this->sendError('The fields \'access_code\' is required', 400);
-        }
-
-        // Check if access_token is still valid
-
     	try{
 
-    		if(!$request->access_code){
-    			throw new Exception('Invalid access_code');
-    		}
-
-			$accessCodeService = new AccessCodeService();
-    		$accessCode = $accessCodeService->check($request->access_code);
-
-    		if(!$accessCode){
-    			throw new Exception('Invalid or expired access code. Access codes are only available for ten minutes after they\'re generated.');
-    		}
+            $accessCode = AccessCode::where('access_code', $request->access_code)->first();
 
 			$walletService = new WalletService();
 			$wallet = $walletService->getByUser($accessCode->user_id);
 
+            if(!$wallet){
+                throw new Exception('Could not retrieve your wallet information. Please try again later');
+            }
+
     	   return $this->sendResponse($wallet, 'Wallet successfully retrieved!');
 
     	} catch (Exception $e) {
-		  	return $this->sendError($e->getMessage(), 400);
+		  	return $this->sendError($e->getMessage(), 500);
     	}
 
     }

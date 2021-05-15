@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use App\Models\Transaction;
+use App\Models\AccessCode;
+use Illuminate\Support\Facades\Validator;
 
 use App\Services\AccessCodeService;
 use App\Services\WalletService;
@@ -36,32 +38,26 @@ class TransactionController extends ResponseController
         $walletService = new WalletService();
         $userService = new UserService();
 
-        // Check if all required fields are in request
-        $required = $transactionService->validateRequired($request);
+        // Check required fields
 
-        if(!$required){
-            return $this->sendError('The fields \'access_code\', \'receiver_identifier\' and \'amount\' are required', 400);
-        }
+        try{
 
-        // Check if there's an access code and if it's still valid
-    	try{
+            $validator = Validator::make($request->all(), [
+                'access_code'           => 'required|string|min:1|max:80',
+                'amount'                => 'required',
+                'receiver_identifier'   => 'required|string'
+            ]);
 
-            if(is_null($request->access_code)){
-                throw new Exception('Access code is required for any transaction.');
+            if($validator->fails()){
+                throw new Exception('The fields \'access_code\', \'receiver_identifier\' and \'amount\' are required');
             }
 
-			$accessCodeService = new AccessCodeService();
-    		$accessCode = $accessCodeService->check($request->access_code);
+        } catch (Exception $e){
+            return $this->sendError($e->getMessage(), 403);
+        }
 
-    		if(!$accessCode){
-    			throw new Exception('Invalid or expired access code. Access codes are only available for ten minutes after they\'re generated.');
-    		}
-
-            unset($accessCodeService);
-
-    	} catch (Exception $e) {
-		  	return $this->sendError($e->getMessage(), 400);
-    	}
+        
+        $accessCode = AccessCode::where('access_code', $request->access_code)->first();
 
         // Check if user's wallet has the amount they're trying to transfer
 
@@ -97,8 +93,8 @@ class TransactionController extends ResponseController
 
         try {
 
-            $senderUser = User::where('id', $accessCode->owner->id)->first();
-            $receiverUser = User::where('id', $receiverUser->id)->first();
+            $senderUser = User::find(intval($accessCode->owner->id));
+            $receiverUser = User::find(intval($receiverUser->id));
 
             $transaction = $transactionService->create($accessCode, $senderUser, $receiverUser, $request->amount);
             
@@ -129,12 +125,13 @@ class TransactionController extends ResponseController
         SendMailJob::dispatch();
         SendSmsJob::dispatch();
 
-       return $this->sendResponse(['transaction' => 
-        [
-            'uuid'      => $transaction->uuid,
-            'status'    => $transaction->status,
-            'date'      => $transaction->created_at,
-            'amount'    => $transaction->amount 
-        ]], 'Your transaction was successful!');
+       return $this->sendResponse([
+            'transaction' => [
+                'uuid'      => $transaction->uuid,
+                'status'    => $transaction->status,
+                'date'      => $transaction->created_at,
+                'amount'    => $transaction->amount 
+            ]
+        ], 'Your transaction was successful!');
     }
 }

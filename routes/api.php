@@ -18,8 +18,8 @@ use App\Http\Controllers\API\TransactionController;
 */
 
 Route::get('/authenticate', [AuthController::class, 'authenticate']);
-Route::post('/wallet/', [WalletController::class, 'get']);
-Route::post('/transaction', [TransactionController::class, 'make']);
+Route::post('/wallet/', [WalletController::class, 'get'])->middleware(['permission','accessCode']);
+Route::post('/transaction', [TransactionController::class, 'make'])->middleware(['permission','accessCode']);
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
