@@ -501,6 +501,8 @@ class ComposerStaticInitf9e4518de2b608692454e540629f7be2
 
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
+        'App\\Constants\\ApiKeyStatusConstant' => __DIR__ . '/../..' . '/app/Constants/ApiKeyStatusConstant.php',
+        'App\\Constants\\ExternalServiceConstant' => __DIR__ . '/../..' . '/app/Constants/ExternalServiceConstant.php',
         'App\\Constants\\StatusConstant' => __DIR__ . '/../..' . '/app/Constants/StatusConstant.php',
         'App\\Constants\\TransactionStatusConstant' => __DIR__ . '/../..' . '/app/Constants/TransactionStatusConstant.php',
         'App\\Constants\\UserGroupStatusConstant' => __DIR__ . '/../..' . '/app/Constants/UserGroupStatusConstant.php',
@@ -520,8 +522,10 @@ class ComposerStaticInitf9e4518de2b608692454e540629f7be2
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Jobs\\SendMailJob' => __DIR__ . '/../..' . '/app/Jobs/SendMailJob.php',
+        'App\\Jobs\\SendSmsJob' => __DIR__ . '/../..' . '/app/Jobs/SendSmsJob.php',
         'App\\Models\\AccessCode' => __DIR__ . '/../..' . '/app/Models/AccessCode.php',
-        'App\\Models\\ApiKeys' => __DIR__ . '/../..' . '/app/Models/ApiKeys.php',
+        'App\\Models\\ApiKey' => __DIR__ . '/../..' . '/app/Models/ApiKey.php',
         'App\\Models\\Transaction' => __DIR__ . '/../..' . '/app/Models/Transaction.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\UserGroups' => __DIR__ . '/../..' . '/app/Models/UserGroups.php',
@@ -639,6 +643,7 @@ class ComposerStaticInitf9e4518de2b608692454e540629f7be2
         'Cron\\MinutesField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MinutesField.php',
         'Cron\\MonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
         'Database\\Factories\\UserFactory' => __DIR__ . '/../..' . '/database/factories/UserFactory.php',
+        'Database\\Seeders\\ApiKeysTableSeeder' => __DIR__ . '/../..' . '/database/seeders/ApiKeysTableSeeder.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
         'Database\\Seeders\\UserGroupsTableSeeder' => __DIR__ . '/../..' . '/database/seeders/UserGroupsTableSeeder.php',
         'Database\\Seeders\\UsersTableSeeder' => __DIR__ . '/../..' . '/database/seeders/UsersTableSeeder.php',

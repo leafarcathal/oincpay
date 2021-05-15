@@ -5,13 +5,16 @@ use \Exception;
 use App\Http\Controllers\API\ResponseController as ResponseController;
 use Illuminate\Http\Request;
 
-use App\Models\Wallet;
+use App\Models\User;
 use App\Models\Transaction;
 
 use App\Services\AccessCodeService;
 use App\Services\WalletService;
 use App\Services\TransactionService;
 use App\Services\UserService;
+
+use App\Jobs\SendMailJob;
+use App\Jobs\SendSmsJob;
 
 
 class TransactionController extends ResponseController
@@ -64,7 +67,7 @@ class TransactionController extends ResponseController
 
         try{
 
-            if(!$walletService->checkFunds($accessCode->user_id, $request->amount)){
+            if(!$walletService->checkFunds($accessCode->owner->id, $request->amount)){
                 throw new Exception('You don\'t have enough funds for this transaction. You can check your wallet through the POST/wallet endpoint');
             }
 
@@ -94,18 +97,44 @@ class TransactionController extends ResponseController
 
         try {
 
-            $senderWallet = Wallet::where('user_id', $accessCode->user_id)->first();
-            $receiverWallet = Wallet::where('user_id', $receiverUser->id)->first();
+            $senderUser = User::where('id', $accessCode->owner->id)->first();
+            $receiverUser = User::where('id', $receiverUser->id)->first();
 
-            $transaction = $transactionService->create($accessCode, $senderWallet, $receiverWallet, $request->amount);
+            $transaction = $transactionService->create($accessCode, $senderUser, $receiverUser, $request->amount);
             
             if(!$transaction){
-                throw new Exception('Unable to create transaction. Please try again later');
+                throw new Exception('Unable to create  your transaction. Please try again later or contact Oincpay support.');
             }
         } catch (Exception $e){
             return $this->sendError($e->getMessage(), 500);
 
         }
 
+        // Attempt to transfer amount between wallets
+
+        try {
+
+            $transaction = $walletService->transfer($transaction);
+
+            if(!$transaction){
+                throw new Exception('Unable to proccess your transaction. Please try again later or contact Oincpay support.');
+            }
+
+        } catch (Exception $e) {
+            return $this->sendError($e->getMessage(), 500);
+        }
+
+        // Notify the receiver, but does not wait for an answer. This runs asynchronously using laravel queue system.
+
+        SendMailJob::dispatch();
+        SendSmsJob::dispatch();
+
+       return $this->sendResponse(['transaction' => 
+        [
+            'uuid'      => $transaction->uuid,
+            'status'    => $transaction->status,
+            'date'      => $transaction->created_at,
+            'amount'    => $transaction->amount 
+        ]], 'Your transaction was successful!');
     }
 }

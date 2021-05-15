@@ -7,6 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
+    'App\\Constants\\ApiKeyStatusConstant' => $baseDir . '/app/Constants/ApiKeyStatusConstant.php',
+    'App\\Constants\\ExternalServiceConstant' => $baseDir . '/app/Constants/ExternalServiceConstant.php',
     'App\\Constants\\StatusConstant' => $baseDir . '/app/Constants/StatusConstant.php',
     'App\\Constants\\TransactionStatusConstant' => $baseDir . '/app/Constants/TransactionStatusConstant.php',
     'App\\Constants\\UserGroupStatusConstant' => $baseDir . '/app/Constants/UserGroupStatusConstant.php',
@@ -26,8 +28,10 @@ return array(
     'App\\Http\\Middleware\\TrustHosts' => $baseDir . '/app/Http/Middleware/TrustHosts.php',
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
+    'App\\Jobs\\SendMailJob' => $baseDir . '/app/Jobs/SendMailJob.php',
+    'App\\Jobs\\SendSmsJob' => $baseDir . '/app/Jobs/SendSmsJob.php',
     'App\\Models\\AccessCode' => $baseDir . '/app/Models/AccessCode.php',
-    'App\\Models\\ApiKeys' => $baseDir . '/app/Models/ApiKeys.php',
+    'App\\Models\\ApiKey' => $baseDir . '/app/Models/ApiKey.php',
     'App\\Models\\Transaction' => $baseDir . '/app/Models/Transaction.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Models\\UserGroups' => $baseDir . '/app/Models/UserGroups.php',
@@ -145,6 +149,7 @@ return array(
     'Cron\\MinutesField' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/MinutesField.php',
     'Cron\\MonthField' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
     'Database\\Factories\\UserFactory' => $baseDir . '/database/factories/UserFactory.php',
+    'Database\\Seeders\\ApiKeysTableSeeder' => $baseDir . '/database/seeders/ApiKeysTableSeeder.php',
     'Database\\Seeders\\DatabaseSeeder' => $baseDir . '/database/seeders/DatabaseSeeder.php',
     'Database\\Seeders\\UserGroupsTableSeeder' => $baseDir . '/database/seeders/UserGroupsTableSeeder.php',
     'Database\\Seeders\\UsersTableSeeder' => $baseDir . '/database/seeders/UsersTableSeeder.php',
