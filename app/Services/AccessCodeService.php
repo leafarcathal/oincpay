@@ -3,9 +3,10 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Auth;
-use App\Models\AccessCode;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+
+use App\Models\AccessCode;
 
 class AccessCodeService
 {
@@ -50,7 +51,7 @@ class AccessCodeService
 
 		if($now->gt($accessCode->valid_through)){
 			return false;
-		} 
+		}
 		return $accessCode;
 	}
 }

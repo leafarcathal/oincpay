@@ -6,6 +6,6 @@ abstract class TransactionStatusConstant
 
     use \App\Traits\ConstantTrait;
     CONST PAID = 'Pago';
-    CONST NOT_PAID = 'Não pago';
+    CONST NOT_PAID = 'Nao pago';
 
 }

@@ -22,16 +22,29 @@ class WalletController extends ResponseController
 	 * @return HTTP response
 	 */ 
 
-    public function get(Request $request, $access_code = false)
+    public function get(Request $request)
     {
+
+        // Check if all required fields are in request
+
+        $walletService = new WalletService();
+
+        $required = $walletService->validateRequired($request);
+
+        if(!$required){
+            return $this->sendError('The fields \'access_code\' is required', 400);
+        }
+
+        // Check if access_token is still valid
+
     	try{
 
-    		if(!$access_code){
+    		if(!$request->access_code){
     			throw new Exception('Invalid access_code');
     		}
 
 			$accessCodeService = new AccessCodeService();
-    		$accessCode = $accessCodeService->check($access_code);
+    		$accessCode = $accessCodeService->check($request->access_code);
 
     		if(!$accessCode){
     			throw new Exception('Invalid or expired access code. Access codes are only available for ten minutes after they\'re generated.');
