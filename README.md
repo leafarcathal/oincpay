@@ -73,10 +73,10 @@ sudo docker-compose up -d
 3) Quando os containers estiverem prontos, rode os seguintes comandos.
 
 ```python
-sudo docker-compose exec app bash # access the container
-php artisan migrate # run all the migrations
-php artisan db:seed # run all project seeds
+sudo docker-compose exec app bash # acessa o container
+php artisan migrate # roda todas as migrations
+php artisan db:seed # roda todos as seeds do projeto
 ```
-## Documentation
+## Documentação
 
 Você encontra a nossa documentação de API no Postman. [Dê uma olhada na nossa collection](https://www.getpostman.com/collections/1618666038bdeffc5826).
