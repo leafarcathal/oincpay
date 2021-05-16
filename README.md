@@ -1,6 +1,6 @@
 # OincPay
 
-<p align="center"><img src="https://i.imgur.com/gsrWbwJ.jpg" width="200"></p>
+<p align="center"><img src="https://i.imgur.com/yCITfRb.jpg" width="200"></p>
 
 <p align="center" size="12px">(instruções em português no final da página)</p>
 
