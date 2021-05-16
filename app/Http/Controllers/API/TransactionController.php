@@ -26,8 +26,8 @@ class TransactionController extends ResponseController
 	 *
 	 * @param Request 	    $request  Data received through API call.
 	 * 
-	 * @throws Exception  
-	 * @return 
+	 * @throws Exception if any step fail. 
+	 * @return HTTP response 
 	 */ 
 
     public function make(Request $request)

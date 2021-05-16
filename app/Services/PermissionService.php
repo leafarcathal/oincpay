@@ -15,7 +15,7 @@ class PermissionService
 	/**
 	 * Get user group permission by access_code
 	 * @param String $access_code 
-	 * @return mixed array() or bollean false if fails;
+	 * @return mixed User or bollean false if fails;
 	 */ 
 
 	public function getByAccessCode($access_code)

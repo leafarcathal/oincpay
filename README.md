@@ -39,7 +39,7 @@ php artisan db:seed # run all project seeds
 ```
 ## Documentation
 
-You can find our API documentation on Postman. [Check our collection](https://www.getpostman.com/collections/1618666038bdeffc5826).
+You can find our API documentation on Postman. [Check our collection](https://www.getpostman.com/collections/a2d34d891db2493a744d).
 
 
 
@@ -79,4 +79,4 @@ php artisan db:seed # roda todos as seeds do projeto
 ```
 ## Documentação
 
-Você encontra a nossa documentação de API no Postman. [Dê uma olhada na nossa collection](https://www.getpostman.com/collections/1618666038bdeffc5826).
+Você encontra a nossa documentação de API no Postman. [Dê uma olhada na nossa collection](https://www.getpostman.com/collections/a2d34d891db2493a744d).

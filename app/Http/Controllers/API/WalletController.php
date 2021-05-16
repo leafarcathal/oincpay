@@ -17,7 +17,6 @@ class WalletController extends ResponseController
 	 * Get user's current wallet data 
 	 *
 	 * @param Request 	    $request  Data received through API call.
-	 * @param access_code   $access_code String sent through API.
 	 * 
 	 * @throws Exception If access token ir not valid or expired. 
 	 * @return HTTP response

@@ -21,7 +21,7 @@ class AuthController extends ResponseController
 	 *
 	 * @param Request 	$request  Data received through API call.
 	 * 
-	 * @throws Exception If e-mail or password are not valid.
+	 * @throws Exception If hash is not found
 	 * @return HTTP response
 	 */ 
 
