@@ -21,7 +21,7 @@ class AccessCodeService
 	{
 		$accessCode = AccessCode::create([
 			'user_id' 		=> $user_id,
-			'valid_through' => Carbon::now()->add(10, 'hours'),
+			'valid_through' => Carbon::now()->add(10, 'minutes'),
 			'access_code'	=> Str::random(60),
 		]);
 
