@@ -27,11 +27,18 @@ class WalletService
 			return false;
 		}
 
+		$sentTransactions = $this->getTransactionsSent($wallet);
+		$receivedTransactions = $this->getTransactionsReceived($wallet);
+
 		$wallet = [
 			'wallet' => [
 				'description'		=> $wallet->description,
 				'amount'			=> floatval($wallet->amount)
-			]
+			],
+			'transactions' => [
+				'sent'				=> $sentTransactions,
+				'received'			=> $receivedTransactions,
+			],
 		];
 		return $wallet;
 	}
@@ -63,8 +70,8 @@ class WalletService
 	 * @return Transaction of boolean false if fails;
 	 */ 
 
-	public function transfer(Transaction $transaction){
-
+	public function transfer(Transaction $transaction)
+	{
 		DB::beginTransaction();
 		$error = false;
 
@@ -115,15 +122,14 @@ class WalletService
 	 * @return boolean;
 	 */ 
 
-	protected function addFunds(Wallet $wallet, $amount){
-
+	protected function addFunds(Wallet $wallet, $amount)
+	{
 		$wallet->amount = (floatval($wallet->amount) + floatval($amount));
 		if(!$wallet->save()){
 			return false;
 		} else {
 			return true;
 		}
-
 	}
 
 	/**
@@ -133,14 +139,53 @@ class WalletService
 	 * @return boolean;
 	 */ 
 
-	protected function subFunds(Wallet $wallet, $amount){
-
+	protected function subFunds(Wallet $wallet, $amount)
+	{
 		$wallet->amount = (floatval($wallet->amount) - floatval($amount));
 		if(!$wallet->save()){
 			return false;
  		} else {
  			return true;
  		}
+	}
 
+	/**
+	 * Returns last X transactions where the user sent value to another one
+	 * @param Wallet $wallet,
+	 * @param String $limit - limit the number of results,
+	 * @return array $transactions;
+	 */ 
+
+	protected function getTransactionsSent(Wallet $wallet, $limit = 5)
+	{
+		$transactions = [];
+		foreach($wallet->sentTransactions()->latest()->take($limit)->get() as $transaction){
+			$transactions[] = [
+				'uuid'		=> $transaction->uuid,
+				'amount'	=> floatval($transaction->amount),
+				'date'		=> $transaction->created_at
+			];
+		}
+		return $transactions;
+	}
+
+	/**
+	 * Returns last X transactions where the user sent value to another one
+	 * @param Wallet $wallet,
+	 * @param String $limit - limit the number of results,
+	 * @return array $transactions;
+	 */ 
+
+	protected function getTransactionsReceived(Wallet $wallet, $limit = 5)
+	{
+		$transactions = [];
+		foreach($wallet->receivedTransactions()->latest()->take($limit)->get() as $transaction){
+			$transactions[] = [
+				'uuid'		=> $transaction->uuid,
+				'amount'	=> floatval($transaction->amount),
+				'date'		=> $transaction->created_at
+			];
+		}
+		return $transactions;
 	}
 }

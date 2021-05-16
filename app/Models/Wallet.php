@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 class Wallet extends Model
 {
@@ -32,8 +34,16 @@ class Wallet extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function transactions()
+    public function receivedTransactions()
     {
-        return $this->hasMany(Transactions::class);
+        return $this->hasMany(Transaction::class, 'wallet_id_receiver', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sentTransactions()
+    {
+        return $this->hasMany(Transaction::class, 'wallet_id_sender', 'id');
     }
 }
