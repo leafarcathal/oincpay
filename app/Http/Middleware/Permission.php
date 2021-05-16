@@ -22,6 +22,10 @@ class Permission
         $permissionService = new PermissionService();
         $permissions = $permissionService->getByAccessCode($request->access_code);
 
+        if(!$permissions){
+            abort(response()->json(['success' => false, 'message' => 'Your user does not have privileges to access this endpoint'], 401));
+        }
+
         // Retrieve current controller and method information
         $route = $this->getControllerAndMethod();
 
@@ -32,7 +36,8 @@ class Permission
             $controllers[]  = $value->controller;
             $methods[]      = $value->method;
         }
-        
+
+        // Check if user has the rights to access this method
         if(in_array($route['controller'], $controllers) && in_array($route['method'], $methods)){
             return $next($request);
         } else {

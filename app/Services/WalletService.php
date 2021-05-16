@@ -69,15 +69,13 @@ class WalletService
 		$error = false;
 
 		// Attempts to remove amount from sender's wallet
-
 		$senderWallet = Wallet::find(intval($transaction->wallet_id_sender));
-		$senderWallet->amount = (floatval($senderWallet->amount) - floatval($transaction->amount));
-		if(!$senderWallet->save()){
+
+		if(!$this->subFunds($senderWallet, $transaction->amount)){
 			$error = true;
 		}
 
 		// Checks the status of an external service
-
 		$response = Http::get('https://run.mocky.io/v3/8fafdd68-a090-496f-8c9a-3442cf30dae6');
 		
 		if(!$response->successful()){
@@ -89,21 +87,18 @@ class WalletService
 		}
 
 		// Attempts to add amount on receiver's wallet
-
 		$receiverWallet = Wallet::find(intval($transaction->wallet_id_receiver));
-		$receiverWallet->amount = (floatval($receiverWallet->amount) + floatval($transaction->amount));
-		if(!$receiverWallet->save()){
+
+		if(!$this->addFunds($receiverWallet, $transaction->amount)){
 			$error = true;
 		}
 
 		// Update the transaction status 
-
 		if(!$transaction->update(['status' => TransactionStatusConstant::PAID])){
 			$error = true;
 		}
 
 		// Check if there was an error above. If so, transaction will be rolled back.
-
 		if($error){
 			DB::rollback();
 			return false;
@@ -111,6 +106,41 @@ class WalletService
 
 		DB::commit();
 		return $transaction;
+	}
+
+	/**
+	 * Adds funds to wallet
+	 * @param Wallet $wallet,
+	 * @param String $amount,
+	 * @return boolean;
+	 */ 
+
+	protected function addFunds(Wallet $wallet, $amount){
+
+		$wallet->amount = (floatval($wallet->amount) + floatval($amount));
+		if(!$wallet->save()){
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+
+	/**
+	 * Substract funds from wallet
+	 * @param Wallet $wallet,
+	 * @param String $amount,
+	 * @return boolean;
+	 */ 
+
+	protected function subFunds(Wallet $wallet, $amount){
+
+		$wallet->amount = (floatval($wallet->amount) - floatval($amount));
+		if(!$wallet->save()){
+			return false;
+ 		} else {
+ 			return true;
+ 		}
 
 	}
 }

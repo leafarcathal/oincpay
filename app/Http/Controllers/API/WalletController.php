@@ -40,10 +40,6 @@ class WalletController extends ResponseController
             return $this->sendError($e->getMessage(), 403);
         }
 
-        // Loads WalletService
-
-        $walletService = new WalletService();
-
     	try{
 
             $accessCode = AccessCode::where('access_code', $request->access_code)->first();

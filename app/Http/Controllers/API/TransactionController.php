@@ -99,7 +99,7 @@ class TransactionController extends ResponseController
             $transaction = $transactionService->create($accessCode, $senderUser, $receiverUser, $request->amount);
             
             if(!$transaction){
-                throw new Exception('Unable to create  your transaction. Please try again later or contact Oincpay support.');
+                throw new Exception('Unable to create your transaction. Please try again later or contact Oincpay support.');
             }
         } catch (Exception $e){
             return $this->sendError($e->getMessage(), 500);

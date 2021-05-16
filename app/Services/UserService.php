@@ -33,7 +33,7 @@ class UserService
 	 * @return User or boolean false if it fails;
 	 */ 
 
-	protected function getByEmail($email)
+	public function getByEmail($email)
 	{
 		$user = User::where('email', Str::replace(['-','/'], '', $email))->first();
 		if(is_null($user)){
@@ -48,7 +48,7 @@ class UserService
 	 * @return User or boolean false if it fails;
 	 */ 
 
-	protected function getByDocument($document)
+	public function getByDocument($document)
 	{
 		$user = User::where('document', Str::replace(['-','/','.','_'], '', $document))->first();
 		if(is_null($user)){
