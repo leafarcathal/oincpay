@@ -26,7 +26,7 @@
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
                 <p align="center"><img src="https://i.imgur.com/gsrWbwJ.jpg" width="200"></p>
                 <p>Unfortunately, OincPay is an API service only - which means there's no interface for you to play with. At least, not yet.</p>
-                <p>Check our API documentation if you want to give it a try and let us know if you've got any questions. <br> We're trying to build the best product that we can, so feedbacks are always appreciated!</p>
+                <p>Check our <a style="text-decoration: underline" href="https://www.getpostman.com/collections/1618666038bdeffc5826" target="_blank">API collection on Postman</a> if you want to give it a try and let us know if you've got any questions. <br> We're trying to build the best product that we can, so feedbacks are always appreciated!</p>
             </div>
         </div>
     </body>
