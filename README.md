@@ -41,6 +41,9 @@ php artisan db:seed # run all project seeds
 
 You can find our API documentation on Postman. [Check our collection](https://www.getpostman.com/collections/1618666038bdeffc5826).
 
+
+
+
 ## O que é OincPay?
 
 OincPay é a sua nova carteira virtual. Mais rápida que um raio, segura e fácil de usar. Com OincPay, você poderá transferir qualquer quantia de dinheiro para qualquer um: familiares, amigos, clientes e empresas. OincPay possui as seguintes características:
