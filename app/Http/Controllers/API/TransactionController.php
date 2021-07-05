@@ -44,12 +44,12 @@ class TransactionController extends ResponseController
 
             $validator = Validator::make($request->all(), [
                 'access_code'           => 'required|string|min:1|max:80',
-                'amount'                => 'required',
+                'amount'                => 'required|gt:0',
                 'receiver_identifier'   => 'required|string'
             ]);
 
             if($validator->fails()){
-                throw new Exception('The fields \'access_code\', \'receiver_identifier\' and \'amount\' are required');
+                throw new Exception('The fields \'access_code\', \'receiver_identifier\' and \'amount\' are required - Amount needs to be greater than 0.');
             }
 
         } catch (Exception $e){
